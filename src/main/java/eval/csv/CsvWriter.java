@@ -11,34 +11,20 @@ import eval.pojo.Autores;
 import eval.pojo.Libros;
 
 public class CsvWriter {
-	private static BufferedWriter bw;
-	public static void writeCsv(ArrayList<Autores> autores, ArrayList<Libros> libros) {
+	public static void writeCsv(ArrayList<Autores> autores, ArrayList<Libros> libros) throws IOException {
 		Path csv = Paths.get("D:\\Pruebas\\grd.csv");
-		try {
-			bw = Files.newBufferedWriter(csv);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			System.out.print("----------------------");
-			System.out.print("Error al escribir libros en el Csv");
-			System.out.print("----------------------");
-		}
+		
+		BufferedWriter bw = Files.newBufferedWriter(csv);
 			autores.forEach(a->{
 				try {
 					bw.write(a.getCodigo()+","+a.getNombre()+","+a.getPais()+"\n");
-				} catch (IOException e) {System.out.print("ERROR LOG");
-				System.out.print("----------------------");
-				System.out.print("Error al escribir libros en el Csv");
-				System.out.print("----------------------");}
+				} catch (IOException e) {e.printStackTrace();}
 			});
 			
 			libros.forEach(l->{
 				try {
 					bw.write(l.getIsbn()+","+l.getTitulo()+","+l.getEditorial()+","+l.getCodautor()+"\n");
-				} catch (IOException e) {e.printStackTrace();
-				System.out.print("ERROR LOG");
-				System.out.print("----------------------");
-				System.out.print("Error al escribir autores en el Csv");
-				System.out.print("----------------------");}
+				} catch (IOException e) {e.printStackTrace();}
 			});
 			bw.flush();
 			bw.close();
